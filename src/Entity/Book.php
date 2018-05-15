@@ -88,7 +88,7 @@ class Book
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -98,7 +98,7 @@ class Book
         $this->title = $title;
     }
 
-    public function getAuthor(): ?string
+    public function getAuthor()
     {
         return $this->author;
     }
@@ -108,7 +108,7 @@ class Book
         $this->author = $author;
     }
 
-    public function getPublisher(): ?string
+    public function getPublisher()
     {
         return $this->publisher;
     }
@@ -118,7 +118,7 @@ class Book
         $this->publisher = $publisher;
     }
 
-    public function getIsbn(): ?string
+    public function getIsbn()
     {
         return $this->isbn;
     }
@@ -128,7 +128,7 @@ class Book
         $this->isbn = $isbn;
     }
 
-    public function getSubject(): ?string
+    public function getSubject()
     {
         return $this->subject;
     }
