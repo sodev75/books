@@ -3,9 +3,31 @@
 {% block title %}Add book!{% endblock %}
 
   {% block body %}
-    <div class="row">
-  {{ form_start(form) }}
-  {{ form_widget(form) }}
-  {{ form_end(form) }}
-  </div>
+      <header>
+          <h1>Ajouter un livre à la liste d'envies</h1>
+      </header>
+      <nav class="search">
+          {{ form_start(form) }}
+          <div class="row">
+              <div class="form-group col-sm-3">
+                  {{ form_label(form.title) }}
+                  {{ form_widget(form.title) }}
+              </div>
+              <div class="form-group col-sm-3">
+                  {{ form_label(form.author) }}
+                  {{ form_widget(form.author) }}
+              </div>
+              <div class="form-group col-sm-3">
+                  {{ form_label(form.publisher) }}
+                  {{ form_widget(form.publisher) }}
+              </div>
+              <div class="form-group col-sm-3">
+                  {{ form_label(form.isbn) }}
+                  {{ form_widget(form.isbn) }}
+              </div>
+          </div>
+          {{ form_end(form) }}
+      </nav>
+      <section class=""></section>
+
 {% endblock %}

@@ -57,7 +57,15 @@ class Book
      */
     private $proposedBy;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $googleBooksId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mainCategory;
 
     /**
      * @ORM\Column(type="integer", length=10)
@@ -66,12 +74,23 @@ class Book
     private $pageCount;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $linkSmallImageBook;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $location;
+
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="creation_date", type="datetime")
      * @Assert\DateTime
      */
-    protected $creationDate;
+    private $creationDate;
 
     /**
      * @var \DateTime
@@ -79,7 +98,7 @@ class Book
      * @ORM\Column(name="last_update_date", type="datetime")
      * @Assert\DateTime
      */
-    protected $lastUpdateDate;
+    private $lastUpdateDate;
 
 
 
@@ -169,6 +188,119 @@ class Book
     {
         $this->proposedBy = $proposedBy;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleBooksId()
+    {
+        return $this->googleBooksId;
+    }
+
+    /**
+     * @param mixed $googleBooksId
+     */
+    public function setGoogleBooksId($googleBooksId)
+    {
+        $this->googleBooksId = $googleBooksId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMainCategory()
+    {
+        return $this->mainCategory;
+    }
+
+    /**
+     * @param mixed $mainCategory
+     */
+    public function setMainCategory($mainCategory)
+    {
+        $this->mainCategory = $mainCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPageCount()
+    {
+        return $this->pageCount;
+    }
+
+    /**
+     * @param mixed $pageCount
+     */
+    public function setPageCount($pageCount)
+    {
+        $this->pageCount = $pageCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLinkSmallImageBook()
+    {
+        return $this->linkSmallImageBook;
+    }
+
+    /**
+     * @param mixed $linkSmallImageBook
+     */
+    public function setLinkSmallImageBook($linkSmallImageBook)
+    {
+        $this->linkSmallImageBook = $linkSmallImageBook;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @param \DateTime $creationDate
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastUpdateDate()
+    {
+        return $this->lastUpdateDate;
+    }
+
+    /**
+     * @param \DateTime $lastUpdateDate
+     */
+    public function setLastUpdateDate($lastUpdateDate)
+    {
+        $this->lastUpdateDate = $lastUpdateDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param mixed $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
 
     /**
      * Updates the correct date (s) as appropriate

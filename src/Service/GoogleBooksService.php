@@ -105,6 +105,21 @@ class GoogleBooksService
 
     }
 
+    public function searchBookBy()
+    {
+
+    }
+
+    public function searchBookById(integer $id)
+    {
+
+    }
+
+    public function searchBookByIsbn(integer $id)
+    {
+
+    }
+
 
 
 }

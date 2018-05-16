@@ -10,15 +10,6 @@ use App\Form\BookType;
 
 class BookController extends Controller
 {
-    /**
-     * @Route("/", name="home")
-     */
-    public function index()
-    {
-        return $this->render('book/index.html.twig', [
-            'controller_name' => 'BookController',
-        ]);
-    }
 
     /**
      * @Route("/book/list", name="list books")
@@ -26,17 +17,15 @@ class BookController extends Controller
     public function listBookLibrary(Request $request)
     {
         return $this->render('book/list.html.twig', [
-            'controller_name' => 'BookController',
         ]);
     }
 
     /**
-     * @Route("/book/list", name="wishlist books")
+     * @Route("/book/wishlist", name="wishlist books")
      */
     public function wishListBookLibrary()
     {
         return $this->render('book/list.html.twig', [
-            'controller_name' => 'BookController',
         ]);
     }
 
@@ -45,12 +34,32 @@ class BookController extends Controller
      */
     public function addWishListBookLibrary()
     {
-       $book = new Book();
+        $book = new Book();
         $form = $this->createForm(BookType::class, $book);
 
         return $this->render('book/add.html.twig', [
-            'controller_name' => 'BookController',
             'form' => $form->createView(),
         ]);
+    }
+
+
+    /**
+     * @Route("/book/{id}", name="view book")
+     */
+    public function viewBook(Request $request)
+    {
+        return $this->render('book/view.html.twig', [
+            'controller_name' => 'BookController',
+        ]);
+    }
+
+
+    /**
+     * Ajax search books
+     * @Route("/book/search", name="search books")
+     */
+    public function searchBook()
+    {
+
     }
 }
