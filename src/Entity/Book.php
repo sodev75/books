@@ -19,31 +19,27 @@ class Book
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $author;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $publisher;
 
     /**
-     * @ORM\Column(type="integer", length=13)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="integer", length=13, nullable=true)
      */
     private $isbn;
 
     /**
-     * @ORM\Column(type="text", length=1500)
+     * @ORM\Column(type="text", length=1500, nullable=true)
      */
     private $subject;
 
@@ -68,8 +64,7 @@ class Book
     private $mainCategory;
 
     /**
-     * @ORM\Column(type="integer", length=10)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="integer", length=10, nullable=true)
      */
     private $pageCount;
 
@@ -87,7 +82,7 @@ class Book
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="creation_date", type="datetime")
+     * @ORM\Column(name="creation_date", type="datetime", nullable=true)
      * @Assert\DateTime
      */
     private $creationDate;
@@ -95,7 +90,7 @@ class Book
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_update_date", type="datetime")
+     * @ORM\Column(name="last_update_date", type="datetime", nullable=true)
      * @Assert\DateTime
      */
     private $lastUpdateDate;

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Add book!{% endblock %}
+{% block title %}{{ book.title }}{% endblock %}
 
   {% block body %}
       <header>
@@ -13,7 +13,6 @@
           {{ book.mainCategory }}
           {{ book.proposedBy }}
           {{ book.pageCount }}
-          {{ book.proposedBy }}
 
       </section>
 

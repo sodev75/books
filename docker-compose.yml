@@ -1,0 +1,64 @@
+version: '3'
+
+#########################
+#          DEV          #
+#########################
+
+services:
+
+  nginx:
+    build:
+      context: $PWD/.docker/nginx-php
+      dockerfile: Dockerfile
+    restart: "${RESTART_POLICIES}"
+    depends_on:
+      - php
+    ports :
+      - "${NGINX_PORT}:80"
+    environment:
+      - "SERVER_NAME=${SERVER_NAME}"
+      - "PHP_ADDRESS=${PHP_ADDRESS}"
+      - "TZ=${TIMEZONE}"
+    volumes:
+      - "$PWD:/var/www/wedo-books"
+    command: [nginx-debug, '-g', 'daemon off;']
+    networks:
+      - "mr-network"
+
+  php:
+    build:
+      context: $PWD/.docker/php-fpm/7.2/dev
+      dockerfile: Dockerfile
+      args:
+        DOCKER_USER: ${DOCKER_USER}
+        DOCKER_USER_ID: ${DOCKER_USER_ID}
+    restart: "${RESTART_POLICIES}"
+    environment:
+      - "TZ=${TIMEZONE}"
+      - "XDEBUG_CONFIG=remote_host=${REMOTE_HOST}"
+    volumes:
+      - "$PWD:/var/www/wedo-books"
+    working_dir: "/var/www/wedo-books"
+    user: "${DOCKER_USER}"
+    entrypoint:
+      - ""
+    command:
+      - "php-fpm"
+    networks:
+      - "mr-network"
+
+  db:
+    image: postgres:9.5
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - "$PWD/.data/db:/var/lib/postgresql/data:Z"
+    environment:
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+    networks:
+      - "mr-network"
+
+networks:
+    mr-network:
+        driver: bridge

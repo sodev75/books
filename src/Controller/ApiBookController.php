@@ -65,7 +65,7 @@ class ApiBookController extends FOSRestController
         );
 
         /** @var Book $book */
-        $book  = $serializer->deserialize($request->getContent(), Book::class, 'json');
+        //$book  = $serializer->deserialize($request->getContent(), Book::class, 'json');
         //$infoBook = $googleBooksService->searchBookByIsbn($request->get('isbn'));
 
 

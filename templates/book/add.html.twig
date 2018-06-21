@@ -4,7 +4,7 @@
 
   {% block body %}
       <header>
-          <h1>Ajouter un livre à la liste d'envies</h1>
+          <h1>Add a book to your wishlist</h1>
       </header>
       <nav class="search">
           {{ form_start(form) }}
@@ -21,13 +21,70 @@
                   {{ form_label(form.publisher) }}
                   {{ form_widget(form.publisher) }}
               </div>
-              <div class="form-group col-sm-3">
-                  {{ form_label(form.isbn) }}
-                  {{ form_widget(form.isbn) }}
-              </div>
           </div>
           {{ form_end(form) }}
       </nav>
-      <section class=""></section>
+
+      <section class="">
+          <div class="row">
+              {% for book in booksSearchResults %}
+                  <div class="col col-sm-3">
+                      <div class="card">
+                          <div class="card-header bg-info">
+                              {{ book.volumeInfo.title }} de
+                              {% for author in book.volumeInfo.authors %}
+                                {{ author }},
+                              {% endfor %}
+                          </div>
+                          <div class="card-body">
+                              <div class="card-text">
+                                  {{ book.volumeInfo.subtitle }}
+                              </div>
+                              <div class="card-text">
+                                  publié par {{ book.volumeInfo.publisher }}
+                              </div>
+                              <br>
+                              <div class="card-text">
+                                  {{ book.volumeInfo.description|truncate(200) }}
+                              </div>
+                              <div class="card-text">
+                                  Un livre en langue {{ book.volumeInfo.language }} de {{ book.volumeInfo.pageCount }} pages
+                              </div>
+                              <div class="card-text">
+                                  De catégorie : {{ book.volumeInfo.categories.0|default("N/A") }}
+                              </div>
+                          </div>
+                          <div class="card-footer">
+                              <a data-id="{{ book.id }}" href="" class="addBook card-text btn btn-success">Add this book</a>
+                          </div>
+
+                      </div>
+
+                  </div>
+              {% endfor %}
+          </div>
+      </section>
+      <script>
+          $(document).ready(function () {
+                jQuery(".addBook").click(function(e){
+                    e.preventDefault();
+                    var volumeId = $(this).attr('data-id');
+                    $.ajax({
+                        url: "{{ path('search_books') }}",
+                        type: "POST",
+                        data: {
+                            "volumeId": volumeId
+                        },
+                    }).done(function (data) {
+                        console.log(data);
+                        $(".alert-success").remove();
+                        $('<div class="container alert alert-success">' + data.success + '</div>').insertBefore('.page-header');
+                    });
+
+                });
+
+          });
+
+      </script>
 
 {% endblock %}

@@ -14,11 +14,11 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('author', TextType::class)
-            ->add('publisher', TextType::class)
-            ->add('isbn', TextType::class)
+            ->add('title', TextType::class, [ 'required' => false])
+            ->add('author', TextType::class, [ 'required' => false])
+            ->add('publisher', TextType::class, [ 'required' => false])
             ->add('submit', SubmitType::class)
+            ->remove('isbn')
             ->remove('subject')
             ->remove('isInTheLibrary')
             ->remove('proposedBy')
