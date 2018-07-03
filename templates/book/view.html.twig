@@ -3,17 +3,49 @@
 {% block title %}{{ book.title }}{% endblock %}
 
   {% block body %}
-      <header>
-          <h1>{{ book.title }}</h1>
-      </header>
       <section class="book">
-          {{ book.author }}
-          {{ book.publisher }}
-          {{ book.subject }}
-          {{ book.mainCategory }}
-          {{ book.proposedBy }}
-          {{ book.pageCount }}
+
+          <div class="card">
+              <div class="card-header bg-info">
+                  <div class="col-sm-12">
+                      <h1>{{ book.title }} de {{ book.author }}</h1>
+                  </div>
+              </div>
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-sm-4">
+                          <img src="{{ book.linkSmallImageBook }}" alt=""> <br>
+                      </div>
+                      <div class="col-sm-8">
+                          <div class="card-text">
+                              publié par {{ book.publisher }}
+                          </div>
+                          <div class="card-text">
+                              Un livre en langue {{ book.language }} de {{ book.pageCount }} pages
+                          </div>
+                          <div class="card-text">
+                              De catégorie : {{ book.MainCategory }}
+                          </div>
+                          <div class="card-text">
+                              {{ book.description }}
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+
+              </div>
+              <div class="card-footer">
+                  {% if book.isInTheLibrary %}
+                      <p>Ce livre est dans la bibliothèque au niveau du {{ book.location }}</p>
+                  {% else %}
+                      <a data-id="{{ book.id }}" href="" class="addBook card-text btn btn-success">Ce livre est arrivé dans la biblio</a>
+                  {% endif %}
+              </div>
+
+          </div>
+
 
       </section>
 
 {% endblock %}
+

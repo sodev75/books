@@ -39,9 +39,9 @@ class Book
     private $isbn;
 
     /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $subject;
+    private $description;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -69,7 +69,7 @@ class Book
     private $pageCount;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $linkSmallImageBook;
 
@@ -77,6 +77,11 @@ class Book
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $location;
+
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $language;
 
 
     /**
@@ -142,15 +147,22 @@ class Book
         $this->isbn = $isbn;
     }
 
-    public function getSubject()
+    /**
+     * @return mixed
+     */
+    public function getDescription()
     {
-        return $this->subject;
+        return $this->description;
     }
 
-    public function setSubject(string $subject)
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
     {
-        $this->subject = $subject;
+        $this->description = $description;
     }
+
 
     /**
      * @return mixed
@@ -294,6 +306,22 @@ class Book
     public function setLocation($location)
     {
         $this->location = $location;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
     }
 
 

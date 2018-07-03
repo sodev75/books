@@ -18,7 +18,9 @@ class BookController extends Controller
      */
     public function listBookLibrary(Request $request)
     {
+        $books = $this->getDoctrine()->getRepository(Book::class)->findBy(['isInTheLibrary' => true]);
         return $this->render('book/list.html.twig', [
+            "books" => $books
         ]);
     }
 
@@ -27,7 +29,9 @@ class BookController extends Controller
      */
     public function wishListBookLibrary()
     {
+        $books = $this->getDoctrine()->getRepository(Book::class)->findBy(['isInTheLibrary' => false]);
         return $this->render('book/list.html.twig', [
+            "books" => $books
         ]);
     }
 
@@ -76,22 +80,17 @@ class BookController extends Controller
 
 
     /**
-     * @Route("/book/{id}", name="view book", requirements={"id": "\d+"})
+     * @Route("/books/{id}", name="view book", requirements={"id": "\d+"})
      */
     public function viewBook(Request $request)
     {
         $id = $request->get('id');
-        //$book = $this->getDoctrine()->getRepository(Book::class)->find($id);
-        $wishBook = new Book();
-        $wishBook->setTitle('test');
-        $wishBook->setPublisher('test2');
-        $wishBook->setMainCategory('Test3');
-        $wishBook->setisInTheLibrary(false);
-        $wishBook->setPageCount(500);
-        $wishBook->setSubject('TEst4');
-        $wishBook->setProposedBy('Sophie');
+        $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
+        if(!$book){
+            return $this->redirectToRoute('list books');
+        }
         return $this->render('book/view.html.twig', [
-            'book' => $wishBook,
+            'book' => $book,
         ]);
     }
 
@@ -107,17 +106,24 @@ class BookController extends Controller
             $volumeId = $request->get('volumeId');
             if ($volumeId) {
                 $book = $booksService->searchBookById($volumeId);
-                var_dump($book->getVolumeInfo()->getPageCount()); die;
                 $wishBook = new Book();
                 $wishBook->setGoogleBooksId($volumeId);
-                $wishBook->setTitle($book->getVolumeInfo()->getT);
-                $wishBook->setPublisher();
-                $wishBook->setMainCategory();
+                $wishBook->setTitle($book->getVolumeInfo()->getTitle());
+                $wishBook->setPublisher($book->getVolumeInfo()->getPublisher());
+                $authors= null;
+                foreach ($book->getVolumeInfo()->getAuthors() as $author) {
+                    $authors .= $author.", ";
+                }
+                $wishBook->setAuthor($authors);
+                $wishBook->setMainCategory($book->getVolumeInfo()->getCategories()[0]);
                 $wishBook->setisInTheLibrary(false);
-                $wishBook->setLinkSmallImageBook();
+                $wishBook->setLinkSmallImageBook($book->getVolumeInfo()->getImageLinks()->getSmall());
                 $wishBook->setPageCount($book->getVolumeInfo()->getPageCount());
-                $wishBook->setSubject($book->getVolumeInfo()->getDe());
-                //$wishBook->setProposedBy();
+                $wishBook->setDescription($book->getVolumeInfo()->getDescription());
+                $wishBook->setLanguage($book->getVolumeInfo()->getLanguage());
+                $wishBook->setProposedBy('Sophie B');
+                $this->getDoctrine()->getManager()->persist($wishBook);
+                $this->getDoctrine()->getManager()->flush();
                 $response = [
                     'success'       => true,
                     'volumeId'     => $volumeId,
