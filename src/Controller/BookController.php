@@ -20,7 +20,8 @@ class BookController extends Controller
     {
         $books = $this->getDoctrine()->getRepository(Book::class)->findBy(['isInTheLibrary' => true]);
         return $this->render('book/list.html.twig', [
-            "books" => $books
+            "books" => $books,
+            'title' => "Library books"
         ]);
     }
 
@@ -31,7 +32,8 @@ class BookController extends Controller
     {
         $books = $this->getDoctrine()->getRepository(Book::class)->findBy(['isInTheLibrary' => false]);
         return $this->render('book/list.html.twig', [
-            "books" => $books
+            "books" => $books,
+            'title' => "Wishlist books"
         ]);
     }
 
@@ -47,35 +49,32 @@ class BookController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if($form->isValid()){
+            if ($form->isValid()) {
                 /** @var Book $bookSearch */
                 $bookSearch = $form->getData();
                 $title = $bookSearch->getTitle();
                 $author = $bookSearch->getAuthor();
                 $publisher = $bookSearch->getPublisher();
 
-                if ($title){
+                if ($title) {
                     $booksSearchResults = $booksService->searchListofBookByTitle($title);
                 }
-                if ($author){
+                if ($author) {
                     $booksSearchResults = $booksService->searchListofBookByAuthor($author);
                 }
-                if ($publisher){
+                if ($publisher) {
                     $booksSearchResults = $booksService->searchListofBookByAuthor($publisher);
                 }
-                if (($title && $author) || ($title && $publisher) || ($author && $publisher) ){
+                if (($title && $author) || ($title && $publisher) || ($author && $publisher)) {
                     $booksSearchResults = $booksService->searchListofBookByMultiple($title, $author, $publisher);
                 }
             }
-
         }
 
         return $this->render('book/add.html.twig', [
             'form' => $form->createView(),
             'booksSearchResults' => $booksSearchResults
         ]);
-
-
     }
 
 
@@ -86,11 +85,11 @@ class BookController extends Controller
     {
         $id = $request->get('id');
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
-        if(!$book){
+        if (!$book) {
             return $this->redirectToRoute('list books');
         }
         return $this->render('book/view.html.twig', [
-            'book' => $book,
+            'book' => $book
         ]);
     }
 
@@ -102,17 +101,27 @@ class BookController extends Controller
     public function searchBook(Request $request, GoogleBooksService $booksService)
     {
         if ($request->isXmlHttpRequest()) {
-
             $volumeId = $request->get('volumeId');
             if ($volumeId) {
                 $book = $booksService->searchBookById($volumeId);
                 $wishBook = new Book();
                 $wishBook->setGoogleBooksId($volumeId);
-                $wishBook->setTitle($book->getVolumeInfo()->getTitle());
+                $title = $book->getVolumeInfo()->getTitle();
+                $wishBook->setTitle($title);
                 $wishBook->setPublisher($book->getVolumeInfo()->getPublisher());
                 $authors= null;
+                $i=0;
                 foreach ($book->getVolumeInfo()->getAuthors() as $author) {
-                    $authors .= $author.", ";
+                    $i++;
+                    if (count($book->getVolumeInfo()->getAuthors()) == 1) {
+                        $authors = $author;
+                    } else {
+                        if (count($book->getVolumeInfo()) == $i) {
+                            $authors .= $author;
+                        } else {
+                            $authors .= $author.", ";
+                        }
+                    }
                 }
                 $wishBook->setAuthor($authors);
                 $wishBook->setMainCategory($book->getVolumeInfo()->getCategories()[0]);
@@ -127,13 +136,63 @@ class BookController extends Controller
                 $response = [
                     'success'       => true,
                     'volumeId'     => $volumeId,
+                    'msg'       => "$title a bien été ajouté à la wishlist"
                 ];
                 return new JsonResponse($response, 200);
             }
-        }
-        else{
+        } else {
             return new JsonResponse('unauthorized', 401);
         }
+    }
 
+    /**
+     * Ajax add book in library
+     * @Route("/book/addinlibrary", name="add_book_inlibrary")
+     */
+    public function addBookInLibrary(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->get('id');
+            if ($id) {
+                $book = $this->getDoctrine()->getManager()->getRepository(Book::class)->find($id);
+                $book->setisInTheLibrary(true);
+                $title = $book->getTitle();
+                $this->getDoctrine()->getManager()->persist($book);
+                $this->getDoctrine()->getManager()->flush();
+                $response = [
+                    'success'       => true,
+                    'id'     => $id,
+                    'msg'       => "$title a bien été ajouté à la bibliothèque"
+                ];
+                return new JsonResponse($response, 200);
+            }
+        } else {
+            return new JsonResponse('unauthorized', 401);
+        }
+    }
+
+    /**
+     * Ajax add book in library
+     * @Route("/book/delete/{id}", name="delete_book", requirements={"id": "\d+"})
+     */
+    public function deleteBook(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->get('id');
+            if ($id) {
+                $book = $this->getDoctrine()->getManager()->getRepository(Book::class)->find($id);
+                $title = $book->getTitle();
+                $this->getDoctrine()->getManager()->delete($book);
+                $this->getDoctrine()->getManager()->flush();
+                $response = [
+                    'success'       => true,
+                    'id'     => $id,
+                    'msg'       => "$title a bien été supprimé"
+                ];
+                return new JsonResponse($response, 200);
+            }
+        } else {
+            return new JsonResponse('unauthorized', 401);
+        }
     }
 }

@@ -4,6 +4,7 @@
     "require": {
         "php": "^7.0.8",
         "ext-iconv": "*",
+        "friendsofsymfony/jsrouting-bundle": "^2.2",
         "friendsofsymfony/rest-bundle": "^2.3",
         "google/apiclient": "^2.0",
         "nelmio/api-doc-bundle": "^3.2",

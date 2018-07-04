@@ -76,9 +76,11 @@
                             "volumeId": volumeId
                         },
                     }).done(function (data) {
-                        console.log(data);
-                        $(".alert-success").remove();
-                        $('<div class="container alert alert-success">' + data.success + '</div>').insertBefore('.page-header');
+                        if(data.success){
+                            $(this).parent().parent().parent().remove();
+                            $('<div class="alert alert-success">' + data.msg + '</div>').insertAfter('h1');
+                        }
+
                     });
 
                 });

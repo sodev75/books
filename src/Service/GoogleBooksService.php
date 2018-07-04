@@ -49,7 +49,7 @@ class GoogleBooksService
         return $results;
 
     }
-    public function searchListofBookByMultiple(string $title, string $author, string $publisher)
+    public function searchListofBookByMultiple(string $title, string $author=null, string $publisher=null)
     {
         $query= null;
         if($title){

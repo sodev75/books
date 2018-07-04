@@ -20,3 +20,8 @@ and go to books.local.com
 Docker php  : docker-compose exec php bash;
 Docker PostGreSQL : docker-compose exec db psql -U postgres books_platform
 
+##style css
+
+modify your css in /assets/css
+
+and build css run this command  sudo ./node_modules/.bin/encore dev

@@ -13,10 +13,10 @@
               </div>
               <div class="card-body">
                   <div class="row">
-                      <div class="col-sm-4">
+                      <div class="col-sm-3">
                           <img src="{{ book.linkSmallImageBook }}" alt=""> <br>
                       </div>
-                      <div class="col-sm-8">
+                      <div class="col-sm-9">
                           <div class="card-text">
                               publié par {{ book.publisher }}
                           </div>
@@ -26,8 +26,9 @@
                           <div class="card-text">
                               De catégorie : {{ book.MainCategory }}
                           </div>
+                          <br>
                           <div class="card-text">
-                              {{ book.description }}
+                              {{ book.description|raw }}
                           </div>
                       </div>
                   </div>
@@ -38,7 +39,7 @@
                   {% if book.isInTheLibrary %}
                       <p>Ce livre est dans la bibliothèque au niveau du {{ book.location }}</p>
                   {% else %}
-                      <a data-id="{{ book.id }}" href="" class="addBook card-text btn btn-success">Ce livre est arrivé dans la biblio</a>
+                      <a data-id="{{ book.id }}" href="" class="addBook card-text btn btn-success">This book is in the library</a>
                   {% endif %}
               </div>
 
