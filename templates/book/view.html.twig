@@ -37,16 +37,67 @@
               </div>
               <div class="card-footer">
                   {% if book.isInTheLibrary %}
-                      <p>Ce livre est dans la bibliothèque au niveau du {{ book.location }}</p>
+                      <div class="row">
+                          <p class="col-sm-12">This book is in the library at {{ book.location }}</p>
+                      </div>
                   {% else %}
-                      <a data-id="{{ book.id }}" href="" class="addBook card-text btn btn-success">This book is in the library</a>
+                      <a data-id="{{ book.id }}" href="" class="addBookLibrary card-text btn btn-warning">Add in library</a>
                   {% endif %}
+                  <a  data-id="{{ book.id }}" href="" class="deleteBook card-text btn btn-danger">Delete</a>
               </div>
 
           </div>
 
 
       </section>
+
+      <script>
+          $(document).ready(function () {
+              jQuery(".addBookLibrary").click(function(e){
+                  e.preventDefault();
+                  var id = $(this).attr('data-id');
+                  $.ajax({
+                      url: "{{ path('add_book_inlibrary') }}",
+                      type: "POST",
+                      data: {
+                          "id": id
+                      },
+                  }).done(function (data) {
+                      if(data.success){
+                          $("#book"+id).remove();
+                          $('<div class="alert alert-success">' + data.msg + '</div>').insertAfter('section header');
+                      }
+
+                  });
+
+              });
+
+              jQuery(".deleteBook").click(function(e){
+                  e.preventDefault();
+                  var id = $(this).attr('data-id');
+                  var url = Routing.generate('delete_book', {
+                      'id': id
+                  });
+                  $.ajax({
+                      url: url,
+                      type: "POST",
+                      data: {
+                          "id": id
+                      },
+                  }).done(function (data) {
+                      if(data.success){
+                          $("#book"+id).remove();
+                          $('<div class="alert alert-success">' + data.msg + '</div>').insertAfter('section header');
+                      }
+
+                  });
+
+              });
+
+
+          });
+
+      </script>
 
 {% endblock %}
 

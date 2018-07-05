@@ -173,7 +173,7 @@ class BookController extends Controller
 
     /**
      * Ajax add book in library
-     * @Route("/book/delete/{id}", name="delete_book", requirements={"id": "\d+"})
+     * @Route("/book/delete/{id}", name="delete_book", requirements={"id": "\d+"}, options={"expose"=true})
      */
     public function deleteBook(Request $request)
     {
@@ -182,7 +182,7 @@ class BookController extends Controller
             if ($id) {
                 $book = $this->getDoctrine()->getManager()->getRepository(Book::class)->find($id);
                 $title = $book->getTitle();
-                $this->getDoctrine()->getManager()->delete($book);
+                $this->getDoctrine()->getManager()->remove($book);
                 $this->getDoctrine()->getManager()->flush();
                 $response = [
                     'success'       => true,

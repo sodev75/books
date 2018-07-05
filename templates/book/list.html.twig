@@ -11,7 +11,7 @@
         </header>
         <div class="row">
             {% for book in books %}
-                <div class="col col-sm-3">
+                <div id="book{{ book.id }}" class="col col-sm-3">
                     <div class="card">
                         <div class="card-header bg-info">
                             <div class="col-sm-12">
@@ -51,7 +51,7 @@
                                 <a data-id="{{ book.id }}" href="" class="addBookLibrary card-text btn btn-warning">Add in library</a>
                             {% endif %}
                             <a  href="{{ url('view book', { 'id' : book.id } ) }}" class="card-text btn btn-success">View more</a>
-                            <a  href="{{ url('view book', { 'id' : book.id } ) }}" class="deleteBook card-text btn btn-danger">Delete</a>
+                            <a  data-id="{{ book.id }}" href="" class="deleteBook card-text btn btn-danger">Delete</a>
                         </div>
 
                     </div>
@@ -73,8 +73,8 @@
                     },
                 }).done(function (data) {
                     if(data.success){
-                        $(this).parent().parent().parent().remove();
-                        $('<div class="alert alert-success">' + data.msg + '</div>').insertAfter('h1');
+                        $("#book"+id).remove();
+                        $('<div class="alert alert-success">' + data.msg + '</div>').insertAfter('section header');
                     }
 
                 });
@@ -84,16 +84,19 @@
             jQuery(".deleteBook").click(function(e){
                 e.preventDefault();
                 var id = $(this).attr('data-id');
+                var url = Routing.generate('delete_book', {
+                    'id': id
+                });
                 $.ajax({
-                    url: "{{ url('delete_book', { 'id' : id}) }}",
+                    url: url,
                     type: "POST",
                     data: {
                         "id": id
                     },
                 }).done(function (data) {
                     if(data.success){
-                        $(this).parent().parent().parent().remove();
-                        $('<div class="alert alert-success">' + data.msg + '</div>').insertAfter('h1');
+                        $("#book"+id).remove();
+                        $('<div class="alert alert-success">' + data.msg + '</div>').insertAfter('section header');
                     }
 
                 });
