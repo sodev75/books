@@ -1,4 +1,7 @@
 {
+    "clue/stream-filter": {
+        "version": "v1.4.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -98,6 +101,9 @@
             "ref": "258300d52be6ad59b32a888d5ddafbf9638540ff"
         }
     },
+    "friendsofsymfony/user-bundle": {
+        "version": "v2.1.2"
+    },
     "google/apiclient": {
         "version": "2.0",
         "recipe": {
@@ -122,8 +128,29 @@
     "guzzlehttp/psr7": {
         "version": "1.4.2"
     },
+    "http-interop/http-factory": {
+        "version": "0.3.0"
+    },
+    "hwi/oauth-bundle": {
+        "version": "0.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.6",
+            "ref": "7dcf0116eef13eb83e9eadf5e0ddf14d572cd036"
+        }
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "kriswallsmith/buzz": {
+        "version": "0.17",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.17",
+            "ref": "89a8c10882c422723d1c7f80a41f7008b17f608c"
+        }
     },
     "monolog/monolog": {
         "version": "1.23.0"
@@ -140,8 +167,38 @@
     "nikic/php-parser": {
         "version": "v4.0.1"
     },
+    "nyholm/psr7": {
+        "version": "0.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.3",
+            "ref": "caee6dde912660fc0763cf7be689ac165cfd050f"
+        }
+    },
     "ocramius/proxy-manager": {
         "version": "2.0.4"
+    },
+    "paragonie/random_compat": {
+        "version": "v2.0.17"
+    },
+    "php-http/client-common": {
+        "version": "1.7.0"
+    },
+    "php-http/discovery": {
+        "version": "1.4.0"
+    },
+    "php-http/httplug": {
+        "version": "v1.1.0"
+    },
+    "php-http/message": {
+        "version": "1.6.0"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/promise": {
+        "version": "v1.0.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -160,6 +217,9 @@
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "0.1.0"
     },
     "psr/http-message": {
         "version": "1.0.1"

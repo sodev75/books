@@ -1,0 +1,9 @@
+# FOS user bundle configuration
+# app/config/config.yml
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: '%env(MAILER_USER_ADDRESS)%'
+        sender_name: '%env(MAILER_USER_NAME)%'
